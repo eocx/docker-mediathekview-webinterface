@@ -7,7 +7,7 @@ ENV MEDIATHEK_VERSION=15.0.0
 
 # Refresh apt cache
 RUN apt-get update \
-    && apt-get upgrade -y
+    && apt-get -o Dpkg::Options::="--force-overwrite" dist-upgrade -y
 
 # Locale needed for storing files with umlaut
 RUN apt-get install -y apt-utils locales \
