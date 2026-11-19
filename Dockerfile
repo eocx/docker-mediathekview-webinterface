@@ -14,9 +14,9 @@ RUN apt-get install -y apt-utils locales \
     && echo en_US.UTF-8 UTF-8 > /etc/locale.gen \
     && locale-gen
 
-ENV LC_ALL en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
-ENV LANG en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 # Runtime deps
 RUN apt-get install -y \
