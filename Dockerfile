@@ -25,6 +25,7 @@ RUN apt-get install -y \
         vlc \
         flvstreamer \
         ffmpeg \
+        openjdk-25-jre \
     && rm -rf /var/lib/apt/lists/*
 
 # Maximize only the main/initial window.
@@ -49,9 +50,11 @@ LABEL \
 # Define software download URLs.
 ARG MEDIATHEKVIEW_URL=https://download.mediathekview.de/stabil/MediathekView-$MEDIATHEK_VERSION-linux.tar.gz
 
-# download Mediathekview
-RUN mkdir -p /opt/MediathekView
-RUN wget -q ${MEDIATHEKVIEW_URL} -O MediathekView.tar.gz
-RUN tar xf MediathekView.tar.gz -C /opt
+# download and extract Mediathekview, replace the bundled JRE with the Debian provided
+RUN mkdir -p /opt/MediathekView \
+    && wget -q ${MEDIATHEKVIEW_URL} -O MediathekView.tar.gz \
+    && tar -xzf MediathekView.tar.gz -C /opt \
+    && rm -fr /opt/MediathekView/jre \
+    && ln -s /usr/lib/jvm/java-25-openjdk-amd64 /opt/MediathekView/jre
 
 COPY src/startapp.sh /startapp.sh
